@@ -1,0 +1,102 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.band-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center}
+.band-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.band-val{font-size:20px;font-weight:500}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.filter-btn{font-size:13px;padding:4px 12px;border-radius:99px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer}
+.filter-btn.active{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent}
+.items{display:flex;flex-direction:column;gap:10px}
+.item{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;background:var(--color-background-primary)}
+.item-header{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;font-weight:500}
+.badge-error{background:var(--color-background-danger);color:var(--color-text-danger)}
+.badge-improve{background:var(--color-background-warning);color:var(--color-text-warning)}
+.badge-tr{background:#E6F1FB;color:#0C447C}
+.badge-cc{background:#EAF3DE;color:#27500A}
+.badge-lr{background:#FAEEDA;color:#633806}
+.badge-gr{background:#FBEAF0;color:#72243E}
+.quote{font-size:13px;font-style:italic;color:var(--color-text-secondary);background:var(--color-background-secondary);border-left:3px solid var(--color-border-secondary);padding:6px 10px;border-radius:0 4px 4px 0;margin-bottom:10px;line-height:1.5}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.detail-block{font-size:13px}
+.detail-label{font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.detail-text{color:var(--color-text-primary);line-height:1.5}
+.correction{color:var(--color-text-success)}
+</style>
+<div class="wrap">
+<h2 class="sr-only">IELTS Writing Task 2 essay feedback on advertising essay: errors and improvements across four band criteria</h2>
+
+<div class="summary-grid">
+  <div class="band-card"><div class="band-label">Task Response</div><div class="band-val" style="color:#185FA5">~6</div></div>
+  <div class="band-card"><div class="band-label">Coherence & Cohesion</div><div class="band-val" style="color:#3B6D11">~6</div></div>
+  <div class="band-card"><div class="band-label">Lexical Resource</div><div class="band-val" style="color:#854F0B">~5.5</div></div>
+  <div class="band-card"><div class="band-label">Grammatical Range</div><div class="band-val" style="color:#993556">~5.5</div></div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filter('all',this)">All</button>
+  <button class="filter-btn" onclick="filter('error',this)">Errors only</button>
+  <button class="filter-btn" onclick="filter('improve',this)">Improvements only</button>
+  <button class="filter-btn" onclick="filter('TR',this)">TR</button>
+  <button class="filter-btn" onclick="filter('CC',this)">CC</button>
+  <button class="filter-btn" onclick="filter('LR',this)">LR</button>
+  <button class="filter-btn" onclick="filter('GR',this)">GR</button>
+</div>
+
+<div class="items" id="items"></div>
+</div>
+
+<script>
+const data=[
+  {type:"error",cat:"GR",quote:"In this digital eras",explanation:"'Era' is a countable singular noun here. 'Eras' is plural, which does not agree with the singular article 'this'. This is a noun-number agreement error.",hint:"Use singular: 'this digital era'.",correction:"In this digital era"},
+  {type:"error",cat:"LR",quote:"Due to some reason",explanation:"'Some reason' is vague and informal. It suggests you have reasons but are not stating them — which undermines the position claim that follows. This is also a non-standard collocation.",hint:"State a specific reason or use a phrase like 'for several reasons' if you plan to list them.",correction:"For several reasons, / Given the pervasive nature of modern advertising,"},
+  {type:"error",cat:"LR",quote:"I strongly believe that consumers are strongly affected",explanation:"'Strongly' is used twice in the same sentence (once for 'believe', once for 'affected'). This is lexical repetition that signals a limited range of adverbs.",hint:"Replace one instance with a different intensifier or rephrase one clause.",correction:"I firmly believe that consumers are profoundly affected by advertising."},
+  {type:"error",cat:"LR",quote:"some certain methods",explanation:"'Some certain' is a redundant collocation — 'certain' already implies specificity, making 'some' unnecessary. It also sounds unnatural in academic writing.",hint:"Use either 'certain' or 'some', not both.",correction:"certain measures / some measures"},
+  {type:"error",cat:"GR",quote:"advertising widely influenced customers' purchasing decisions",explanation:"Incorrect verb tense. The paragraph is discussing a general/ongoing truth, which requires the simple present tense. 'Influenced' is simple past.",hint:"Use simple present for general statements about current behaviour.",correction:"advertising widely influences customers' purchasing decisions"},
+  {type:"error",cat:"GR",quote:"the government need to introduce",explanation:"Subject-verb agreement error. 'The government' is a singular collective noun in academic English, requiring 'needs'.",hint:"Treat 'the government' as singular: 'the government needs'.",correction:"the government needs to introduce"},
+  {type:"error",cat:"CC",quote:"comparing it with the idealistic and better version of the products",explanation:"Pronoun reference is unclear. 'It' is meant to refer to 'their current products' (plural), creating a number mismatch. The sentence structure also becomes hard to follow.",hint:"Make the pronoun agree with its antecedent, or rewrite for clarity.",correction:"comparing these with an idealised, superior version of the product"},
+  {type:"error",cat:"LR",quote:"the demand-created strategy",explanation:"This is a non-standard, awkward compound. 'Demand-created strategy' is not an established collocation and will read as a word-formation error to an examiner.",hint:"Use a standard marketing/economics term.",correction:"demand-generating tactics / strategies that manufacture demand"},
+  {type:"error",cat:"GR",quote:"This will create contrast which makes people feel inadequate in the current time",explanation:"Two issues: (1) 'contrast' needs a determiner — 'a contrast'; (2) 'in the current time' is an unidiomatic phrase.",hint:"Add the article, and replace 'in the current time' with a natural expression.",correction:"This creates a contrast that makes people feel dissatisfied with what they currently have"},
+  {type:"improve",cat:"TR",quote:"Therefore, some certain methods should be implemented to protect them.",explanation:"The introduction announces the essay's conclusions before presenting any argument. For a 'discuss both views + opinion' task, the intro should outline the two views and signal your position, not pre-announce your solutions.",hint:"Reserve 'methods should be implemented' for the conclusion. The intro should simply state: 'This essay will discuss both perspectives and suggest protective measures.'",correction:"This essay will examine both perspectives and propose measures that could better protect consumers."},
+  {type:"improve",cat:"TR",quote:"For example many corporations promote their products through celebrities' endorsements and attractive labels.",explanation:"The example illustrates celebrity endorsement but does not explain how or why this leads to 'unnecessary purchases'. The link between example and claim is implied, not stated.",hint:"Add one sentence explaining the mechanism — how endorsements cause the effect you claim.",correction:"For example, many corporations use celebrity endorsements to associate products with status and aspiration, prompting consumers to buy items they do not need in order to align with those values."},
+  {type:"improve",cat:"CC",quote:"On the one hand… On the other hand…",explanation:"The two body paragraphs use mismatched signposting. 'On the one hand / on the other hand' is typically reserved for contrasting two sides. Here the second paragraph is not a contrasting view — it is a set of solutions. This creates a structural mismatch.",hint:"Replace 'On the other hand' with a signpost that introduces solutions.",correction:"To address these concerns, several measures could be implemented."},
+  {type:"improve",cat:"LR",quote:"They often remind customers by showing the minor inconvenience of their current products",explanation:"'Remind customers by showing' is an imprecise collocation. Advertisers don't 'remind' — they highlight, emphasise, or expose. 'Minor inconvenience' also undersells the persuasive technique being described.",hint:"Choose more precise vocabulary that reflects the persuasive mechanism.",correction:"They often highlight the perceived shortcomings of consumers' existing products"},
+  {type:"improve",cat:"LR",quote:"buy new items regardless of the unbroken belongings",explanation:"'Unbroken belongings' is an unusual and imprecise phrase. It likely means 'perfectly functional items they already own', but the phrasing may confuse the reader.",hint:"Use clearer, more academic vocabulary.",correction:"…purchase replacements despite their existing items being fully functional"},
+  {type:"improve",cat:"GR",quote:"They can inform their children how to evaluate advertisements critically, avoid manipulative claims, and understand the persuasive techniques employed by companies.",explanation:"This is a well-formed sentence overall, but the parallel list mixes an infinitive ('to evaluate') with bare verbs ('avoid', 'understand'). Parallelism in lists requires consistent form.",hint:"Make all three verbs the same form — either all infinitives or all bare verbs.",correction:"They can teach children to evaluate advertisements critically, to resist manipulative claims, and to recognise the persuasive techniques employed by companies."},
+  {type:"improve",cat:"TR",quote:"inform customers to protect them",explanation:"'Inform customers' is vague as a concluding recommendation — inform them of what? The conclusion should synthesise the specific measures mentioned in the body.",hint:"Reference your body paragraph content — media literacy education and government regulation.",correction:"…educate consumers in media literacy and enforce regulatory oversight of advertising practices"}
+];
+
+function catClass(c){return{TR:'badge-tr',CC:'badge-cc',LR:'badge-lr',GR:'badge-gr'}[c]||''}
+
+function render(items){
+  document.getElementById('items').innerHTML=items.map(d=>`
+    <div class="item" data-type="${d.type}" data-cat="${d.cat}">
+      <div class="item-header">
+        <span class="badge ${d.type==='error'?'badge-error':'badge-improve'}">${d.type==='error'?'Error':'Improvement'}</span>
+        <span class="badge ${catClass(d.cat)}">${d.cat}</span>
+      </div>
+      <div class="quote">"${d.quote}"</div>
+      <div class="grid2">
+        <div class="detail-block"><div class="detail-label">Explanation</div><div class="detail-text">${d.explanation}</div></div>
+        <div class="detail-block"><div class="detail-label">Hint</div><div class="detail-text">${d.hint}</div></div>
+      </div>
+      <div class="detail-block" style="margin-top:10px"><div class="detail-label">Correction / suggestion</div><div class="detail-text correction">${d.correction}</div></div>
+    </div>
+  `).join('');
+}
+
+function filter(key,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  let f=data;
+  if(key==='error') f=data.filter(d=>d.type==='error');
+  else if(key==='improve') f=data.filter(d=>d.type==='improve');
+  else if(['TR','CC','LR','GR'].includes(key)) f=data.filter(d=>d.cat===key);
+  render(f);
+}
+
+render(data);
+</script>
