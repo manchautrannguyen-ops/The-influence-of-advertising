@@ -1,0 +1,101 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.band-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center}
+.band-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.band-val{font-size:20px;font-weight:500}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.filter-btn{font-size:13px;padding:4px 12px;border-radius:99px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer}
+.filter-btn.active{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent}
+.items{display:flex;flex-direction:column;gap:10px}
+.item{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;background:var(--color-background-primary)}
+.item-header{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;font-weight:500}
+.badge-error{background:var(--color-background-danger);color:var(--color-text-danger)}
+.badge-improve{background:var(--color-background-warning);color:var(--color-text-warning)}
+.badge-tr{background:#E6F1FB;color:#0C447C}
+.badge-cc{background:#EAF3DE;color:#27500A}
+.badge-lr{background:#FAEEDA;color:#633806}
+.badge-gr{background:#FBEAF0;color:#72243E}
+.quote{font-size:13px;font-style:italic;color:var(--color-text-secondary);background:var(--color-background-secondary);border-left:3px solid var(--color-border-secondary);padding:6px 10px;border-radius:0 4px 4px 0;margin-bottom:10px;line-height:1.5}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.detail-block{font-size:13px}
+.detail-label{font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.detail-text{color:var(--color-text-primary);line-height:1.5}
+.correction{color:var(--color-text-success)}
+</style>
+<div class="wrap">
+<h2 class="sr-only">IELTS Writing Task 2 feedback on youth investment essay 2: errors and improvements across four band criteria</h2>
+
+<div class="summary-grid">
+  <div class="band-card"><div class="band-label">Task Response</div><div class="band-val" style="color:#185FA5">~5</div></div>
+  <div class="band-card"><div class="band-label">Coherence & Cohesion</div><div class="band-val" style="color:#3B6D11">~5</div></div>
+  <div class="band-card"><div class="band-label">Lexical Resource</div><div class="band-val" style="color:#854F0B">~5</div></div>
+  <div class="band-card"><div class="band-label">Grammatical Range</div><div class="band-val" style="color:#993556">~4.5</div></div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filter('all',this)">All</button>
+  <button class="filter-btn" onclick="filter('error',this)">Errors only</button>
+  <button class="filter-btn" onclick="filter('improve',this)">Improvements only</button>
+  <button class="filter-btn" onclick="filter('TR',this)">TR</button>
+  <button class="filter-btn" onclick="filter('CC',this)">CC</button>
+  <button class="filter-btn" onclick="filter('LR',this)">LR</button>
+  <button class="filter-btn" onclick="filter('GR',this)">GR</button>
+</div>
+
+<div class="items" id="items"></div>
+</div>
+
+<script>
+const data=[
+  {type:"error",cat:"TR",quote:"In my opinion, I totally agree with this statement. Besides, investing in the other fields is equally important.",explanation:"The introduction presents a contradictory position in two consecutive sentences. Saying you 'totally agree' and then immediately saying other fields are 'equally important' undermines the stated position. A 'totally agree' stance should not pivot to partial agreement. The position is also repeated word-for-word in the conclusion, which the Band 6 rubric flags as 'repetitive'.",hint:"Either commit to a qualified agreement (partial agreement) from the start, or frame it as 'I agree, but would add that...' — and signal this nuance clearly in the introduction, not as a contradiction.",correction:"While I broadly agree that investing in young people is the most effective preparation for a country's future, I also believe that complementary investment in other areas is essential for truly sustainable development."},
+  {type:"error",cat:"GR",quote:"need to be invested from the country",explanation:"'Invested from the country' is not a correct collocation. The intended meaning is that the country should invest in young people, not that young people should be invested from the country. This is a preposition error combined with a passive voice misuse.",hint:"Restructure the clause so 'the country' or 'the government' is the active subject investing in young people.",correction:"require investment from the government"},
+  {type:"error",cat:"GR",quote:"So, the government has to invest adequate resources for them, such as education.",explanation:"'Invest resources for them, such as education' is ungrammatical. You invest resources in an area (education), not for people such as education. The comparison is muddled.",hint:"Separate the idea of investing for young people and investing in education as the means.",correction:"The government should therefore channel adequate resources into education, providing young people with access to quality learning opportunities."},
+  {type:"error",cat:"GR",quote:"It helps them adopt new technologies and easily learn to use modern machines.",explanation:"'It' has no clear antecedent. The previous sentence lists three adjectives (creative, innovative, adaptable) — none of which is a singular noun that 'it' can refer back to. This is a pronoun reference error.",hint:"Replace 'it' with a noun phrase that clearly refers to what you mean.",correction:"This adaptability enables them to adopt new technologies and master the use of modern equipment with ease."},
+  {type:"error",cat:"GR",quote:"In the other age groups, such as elderly members, who hold important positions in more companies, because they have much experience and expertise, so they make meaningful contributions.",explanation:"This is a severely fragmented sentence. It begins with a prepositional phrase ('In the other age groups'), attaches a relative clause ('who hold...'), then a causal clause ('because they have...'), then a result clause ('so they make...'). There is no main verb for the sentence. It is grammatically incomplete — a sentence fragment.",hint:"Restructure with a clear subject and main verb, then attach supporting clauses.",correction:"Older members of the workforce, who hold senior positions in many companies, make meaningful contributions thanks to their extensive experience and expertise."},
+  {type:"error",cat:"GR",quote:"Besides, they are building infrastructure and transport systems.",explanation:"'They are building' uses the present continuous tense, suggesting this is happening right now as an ongoing activity. The context implies a proposed government action, so simple present or modal would be appropriate. 'They' also has an unclear antecedent after several intervening sentences.",hint:"Use a modal or simple present to describe a policy proposal, and clarify the subject.",correction:"The government could also invest in expanding infrastructure and modernising transport systems."},
+  {type:"error",cat:"LR",quote:"hold workshops to train doctors' skills",explanation:"'Train doctors' skills' is an imprecise and unusual collocation. You train doctors (people), not their skills. 'Hold workshops' is also informal for an academic essay.",hint:"Use the correct collocation — train people, not skills. Use more formal vocabulary for 'hold workshops'.",correction:"organise training programmes to develop the competencies of medical professionals"},
+  {type:"error",cat:"LR",quote:"much experience… much potential",explanation:"'Much' used with 'experience' and 'potential' is grammatically valid but sounds unnatural in positive declarative sentences. 'Much' is more standard in negative or interrogative contexts ('not much', 'how much'). In affirmative academic sentences, 'considerable' or 'significant' is the expected register.",hint:"Replace 'much' with a more formal quantifier in affirmative sentences.",correction:"considerable experience / significant potential"},
+  {type:"error",cat:"CC",quote:"Besides investing in the young people, the government needs to invest in other age groups and critical areas of the country.",explanation:"'Besides' is used twice as a paragraph or sentence opener (intro and body para 2). Repeated use of the same connector signals limited cohesive range. 'Besides' is also slightly informal for an academic essay opener.",hint:"Vary your connectors. Use 'In addition to', 'Beyond', or 'While youth investment is vital,' to open the second body paragraph.",correction:"Beyond investing in young people, the government must also direct resources towards other age groups and key national sectors."},
+  {type:"improve",cat:"TR",quote:"Firstly, the young people, who are the best future workforce, need to be invested from the country. So, the government has to invest adequate resources for them, such as education.",explanation:"The paragraph's first argument (youth as future workforce + education) is stated but not developed. There is no example, no data, and no explanation of the mechanism — how education investment translates to future preparedness. Band 6+ requires ideas to be 'sufficiently developed'.",hint:"Add a concrete example or explain the causal chain: investment in education → skilled workforce → economic growth.",correction:"For instance, countries such as South Korea and Singapore have demonstrated that sustained investment in education correlates with rapid economic development, as a highly qualified workforce drives productivity and innovation."},
+  {type:"improve",cat:"TR",quote:"All of those things make people improve their living standards.",explanation:"This sentence attempts to summarise the second body paragraph but is too vague. It does not connect the listed investments (healthcare, transport) back to the essay's central argument — preparing for the future. This weakens the TR score.",hint:"End the paragraph by explicitly linking your points to the question's focus on future preparedness.",correction:"These investments collectively strengthen a nation's foundations, ensuring that all citizens — not just the young — are equipped to contribute productively to the country's long-term future."},
+  {type:"improve",cat:"CC",quote:"Firstly… So… Moreover… Therefore… Therefore… In addition… For example… Besides… All of those things…",explanation:"The essay relies heavily on a small set of connectors and repeats 'Therefore' and 'Besides' multiple times. The connectors feel mechanical and do not always match the logical relationship between ideas ('So' to open a recommendation is abrupt; 'Besides' appears three times total).",hint:"Vary your cohesive devices: use concession ('Although'), relative clauses, and participial phrases rather than always beginning sentences with a connector word.",correction:"Instead of: 'Moreover, the adolescents are creative...' → 'Young people are also inherently creative and adaptable — qualities that enable them to embrace new technologies and contribute to national innovation.'"},
+  {type:"improve",cat:"LR",quote:"young generation… adolescents… young people… the young people",explanation:"The essay alternates between these terms inconsistently, sometimes without the article 'the' (e.g. 'young generation' instead of 'the younger generation'). 'Adolescents' implies teenagers, which may not accurately describe university students or early-career workers.",hint:"Standardise your reference term and ensure article use is consistent.",correction:"Use 'the younger generation' / 'young people' / 'young adults' throughout. Avoid 'adolescents' unless referring specifically to teenagers."},
+  {type:"improve",cat:"GR",quote:"the country should organise the retraining programs, which help equip people with new skills and adapt to changing markets.",explanation:"'Adapt to changing markets' is missing a subject in the relative clause — it sounds as though 'skills' adapt, not people. The relative clause is grammatically ambiguous.",hint:"Clarify who is doing the adapting by restructuring the relative clause.",correction:"the government should introduce retraining programmes that equip workers with new skills and help them adapt to evolving market demands."},
+  {type:"improve",cat:"TR",quote:"the best way for a country to prepare for the future is to invest more resources in young people.",explanation:"The conclusion directly copies the task prompt, which examiners are trained to identify and discount. Conclusions should paraphrase and synthesise, not reproduce the question.",hint:"Rephrase the central idea in your own words, summarising your argument rather than restating the prompt.",correction:"In conclusion, while channelling resources into the younger generation remains the most impactful strategy for national progress, a truly future-ready country must also nurture experienced workers and invest in essential public infrastructure."}
+];
+
+function catClass(c){return{TR:'badge-tr',CC:'badge-cc',LR:'badge-lr',GR:'badge-gr'}[c]||''}
+
+function render(items){
+  document.getElementById('items').innerHTML=items.map(d=>`
+    <div class="item">
+      <div class="item-header">
+        <span class="badge ${d.type==='error'?'badge-error':'badge-improve'}">${d.type==='error'?'Error':'Improvement'}</span>
+        <span class="badge ${catClass(d.cat)}">${d.cat}</span>
+      </div>
+      <div class="quote">"${d.quote}"</div>
+      <div class="grid2">
+        <div class="detail-block"><div class="detail-label">Explanation</div><div class="detail-text">${d.explanation}</div></div>
+        <div class="detail-block"><div class="detail-label">Hint</div><div class="detail-text">${d.hint}</div></div>
+      </div>
+      <div class="detail-block" style="margin-top:10px"><div class="detail-label">Correction / suggestion</div><div class="detail-text correction">${d.correction}</div></div>
+    </div>
+  `).join('');
+}
+
+function filter(key,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  let f=data;
+  if(key==='error') f=data.filter(d=>d.type==='error');
+  else if(key==='improve') f=data.filter(d=>d.type==='improve');
+  else if(['TR','CC','LR','GR'].includes(key)) f=data.filter(d=>d.cat===key);
+  render(f);
+}
+
+render(data);
+</script>
