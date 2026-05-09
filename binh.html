@@ -1,0 +1,99 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.band-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center}
+.band-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.band-val{font-size:20px;font-weight:500}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.filter-btn{font-size:13px;padding:4px 12px;border-radius:99px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer}
+.filter-btn.active{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent}
+.items{display:flex;flex-direction:column;gap:10px}
+.item{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;background:var(--color-background-primary)}
+.item-header{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;font-weight:500}
+.badge-error{background:var(--color-background-danger);color:var(--color-text-danger)}
+.badge-improve{background:var(--color-background-warning);color:var(--color-text-warning)}
+.badge-tr{background:#E6F1FB;color:#0C447C}
+.badge-cc{background:#EAF3DE;color:#27500A}
+.badge-lr{background:#FAEEDA;color:#633806}
+.badge-gr{background:#FBEAF0;color:#72243E}
+.quote{font-size:13px;font-style:italic;color:var(--color-text-secondary);background:var(--color-background-secondary);border-left:3px solid var(--color-border-secondary);padding:6px 10px;border-radius:0 4px 4px 0;margin-bottom:10px;line-height:1.5}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.detail-block{font-size:13px}
+.detail-label{font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.detail-text{color:var(--color-text-primary);line-height:1.5}
+.correction{color:var(--color-text-success)}
+</style>
+<div class="wrap">
+<h2 class="sr-only">IELTS Writing Task 2 feedback on advertising essay 2: errors and improvements across four band criteria</h2>
+
+<div class="summary-grid">
+  <div class="band-card"><div class="band-label">Task Response</div><div class="band-val" style="color:#185FA5">~6</div></div>
+  <div class="band-card"><div class="band-label">Coherence & Cohesion</div><div class="band-val" style="color:#3B6D11">~6</div></div>
+  <div class="band-card"><div class="band-label">Lexical Resource</div><div class="band-val" style="color:#854F0B">~6</div></div>
+  <div class="band-card"><div class="band-label">Grammatical Range</div><div class="band-val" style="color:#993556">~6</div></div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filter('all',this)">All</button>
+  <button class="filter-btn" onclick="filter('error',this)">Errors only</button>
+  <button class="filter-btn" onclick="filter('improve',this)">Improvements only</button>
+  <button class="filter-btn" onclick="filter('TR',this)">TR</button>
+  <button class="filter-btn" onclick="filter('CC',this)">CC</button>
+  <button class="filter-btn" onclick="filter('LR',this)">LR</button>
+  <button class="filter-btn" onclick="filter('GR',this)">GR</button>
+</div>
+
+<div class="items" id="items"></div>
+</div>
+
+<script>
+const data=[
+  {type:"error",cat:"TR",quote:"On the one hand… On the other hand…",explanation:"The question has two distinct parts: how influenced are consumers, and what measures can protect them? These are not two sides of a debate — they are two separate questions. Using 'on the one hand / on the other hand' frames them as contrasting views, which misrepresents the task type and misleads the examiner about the essay's structure.",hint:"Use neutral paragraph signposts: one paragraph for influence, one for protective measures.",correction:"Body paragraph 1: 'Advertisements exert a significant influence on consumers through several mechanisms.' Body paragraph 2: 'Several measures can be adopted to mitigate the impact of advertising on consumers.'"},
+  {type:"error",cat:"GR",quote:"advertisements influence significantly on consumers",explanation:"'Influence' as a verb does not take the preposition 'on'. It is a transitive verb used directly: 'influence someone', not 'influence on someone'. This is a preposition error.",hint:"Remove 'on' — 'influence' takes a direct object.",correction:"advertisements significantly influence consumers"},
+  {type:"error",cat:"GR",quote:"changes attitude in a subconscious mind",explanation:"Two errors: (1) 'attitude' needs a determiner — 'attitudes' (plural) or 'an attitude'; (2) 'in a subconscious mind' is an unusual, unidiomatic expression. The standard phrase is 'at a subconscious level' or 'subconsciously'.",hint:"Use the plural 'attitudes' and replace the prepositional phrase with a standard expression.",correction:"subtly reshapes consumers' attitudes at a subconscious level"},
+  {type:"error",cat:"GR",quote:"as they unconsciously desire to be idealized models as the celebrities in advertisements",explanation:"'To be idealized models as the celebrities' is grammatically awkward. 'As' here is used where 'like' is needed (comparing two things), and 'idealized models' implies they want to become models, rather than resemble celebrities.",hint:"Use 'like' for comparison, and rephrase to clarify the intended meaning.",correction:"as they unconsciously aspire to resemble the idealized images of celebrities portrayed in advertisements"},
+  {type:"error",cat:"LR",quote:"the widespread of misleading information",explanation:"'Widespread' is an adjective, not a noun. The correct noun form is 'spread' or 'proliferation'. 'The widespread of' is a word formation error.",hint:"Replace 'widespread' with the correct noun: 'spread' or 'proliferation'.",correction:"the spread / proliferation of misleading information"},
+  {type:"error",cat:"GR",quote:"so consumers are aware that they can not replace medicine and use it in a proper way",explanation:"The pronoun reference is ambiguous — 'they' could refer to consumers or supplements, and 'it' is unclear (medicine? supplements?). The sentence is also grammatically incomplete as a result clause. 'Use it in a proper way' is also informal.",hint:"Restructure to clarify who does what, and use more precise vocabulary.",correction:"so that consumers understand that dietary supplements cannot replace prescribed medication and should be used as directed"},
+  {type:"error",cat:"GR",quote:"governments encourage newspapers with knowledge about marketing and advertising to be uploaded on social media widely, so these knowledge can be more accessible",explanation:"Two errors: (1) 'these knowledge' — 'knowledge' is uncountable and cannot take 'these'; (2) 'newspapers... to be uploaded' is a confusing construction — you upload articles or content, not newspapers as a category.",hint:"Correct the noun ('this knowledge') and clarify what is being uploaded.",correction:"governments could encourage the publication of articles on marketing literacy across social media platforms, making this knowledge more widely accessible to consumers"},
+  {type:"improve",cat:"TR",quote:"In that situation, they are strongly influenced by advertisements, so the government needs to introduce laws or regulations to control advertising.",explanation:"The introduction answers the 'to what extent' question with a flat, unqualified statement ('strongly influenced') and jumps straight to a policy conclusion. A stronger introduction would signal the degree of influence with some nuance and briefly introduce both angles (influence + protective measures) the essay will address.",hint:"Qualify the extent of influence slightly and signal that both questions will be addressed.",correction:"While the degree of this influence varies by context, advertising clearly shapes consumer behaviour in significant ways. This essay will examine the mechanisms of that influence and propose measures that can better protect consumers from its potential harms."},
+  {type:"improve",cat:"TR",quote:"For example, advertisements for dietary supplements should have accurate information and instructions, so consumers are aware that they can not replace medicine and use it in a proper way.",explanation:"The dietary supplement example is relevant but narrows the regulation point too quickly to one product category. The previous sentence mentions 'foods or drinks', and the example then pivots to supplements, creating a slight drift. More importantly, the example does not explain why regulation of this specific category matters in the broader context of consumer protection.",hint:"Either generalise the example or explain the consumer harm this regulation prevents.",correction:"For instance, advertisements for health products such as dietary supplements should be legally required to include clear disclaimers, preventing consumers from substituting them for prescribed treatments and thereby avoiding potential health risks."},
+  {type:"improve",cat:"CC",quote:"More importantly, advertisements can create desire that is not strictly related to need, which changes attitude in a subconscious mind. For example, this influence on consumers' attitudes clearly reflects on advertisements that use celebrities...",explanation:"The transition between the general claim ('create desire') and the celebrity example is weak. The example essentially repeats the celebrity endorsement point already made in the previous paragraph section, rather than illustrating the 'desire unrelated to need' mechanism specifically.",hint:"Choose an example that directly illustrates manufactured desire — something that shows consumers wanting a product not because it meets a need but because of status or aspiration.",correction:"For example, luxury brand campaigns rarely advertise product functionality; instead, they associate ownership with status and aspiration, creating desire that is entirely disconnected from practical need."},
+  {type:"improve",cat:"LR",quote:"target customers' emotions… building trust among customers",explanation:"'Target customers' emotions' and 'building trust among customers' appear in the same sentence but are logically different — targeting emotions can undermine trust. Using 'customers' twice in close proximity also signals limited substitution range.",hint:"Vary your reference terms and ensure the two ideas are logically distinguished.",correction:"Some brands partner with well-known figures to build credibility, while others design campaigns that appeal directly to consumers' emotions, bypassing rational evaluation."},
+  {type:"improve",cat:"LR",quote:"create curriculums in schools and universities to raise awareness of consumers",explanation:"'Create curriculums' is an unusual collocation — the standard verb is 'develop' or 'introduce'. 'Raise awareness of consumers' is also slightly ambiguous (awareness about consumers, or awareness among consumers?). The intended meaning is raising awareness among consumers.",hint:"Use standard collocations for curriculum and clarify the preposition.",correction:"introduce media literacy curricula in schools and universities to raise awareness among consumers about advertising strategies"},
+  {type:"improve",cat:"GR",quote:"Therefore consumers are likely to be persuaded to purchase that product by celebrity endorsement, especially if they are fans of that celebrity.",explanation:"The sentence ends with a slightly redundant qualifier — if someone is persuaded by celebrity endorsement, it is already implied they are likely fans. The passive 'to be persuaded... by celebrity endorsement' is also wordy and distances the agent from the action.",hint:"Make the sentence more concise and use an active construction.",correction:"Celebrity endorsements are particularly persuasive among fans, who are more inclined to trust and emulate the figures they admire."}
+];
+
+function catClass(c){return{TR:'badge-tr',CC:'badge-cc',LR:'badge-lr',GR:'badge-gr'}[c]||''}
+
+function render(items){
+  document.getElementById('items').innerHTML=items.map(d=>`
+    <div class="item">
+      <div class="item-header">
+        <span class="badge ${d.type==='error'?'badge-error':'badge-improve'}">${d.type==='error'?'Error':'Improvement'}</span>
+        <span class="badge ${catClass(d.cat)}">${d.cat}</span>
+      </div>
+      <div class="quote">"${d.quote}"</div>
+      <div class="grid2">
+        <div class="detail-block"><div class="detail-label">Explanation</div><div class="detail-text">${d.explanation}</div></div>
+        <div class="detail-block"><div class="detail-label">Hint</div><div class="detail-text">${d.hint}</div></div>
+      </div>
+      <div class="detail-block" style="margin-top:10px"><div class="detail-label">Correction / suggestion</div><div class="detail-text correction">${d.correction}</div></div>
+    </div>
+  `).join('');
+}
+
+function filter(key,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  let f=data;
+  if(key==='error') f=data.filter(d=>d.type==='error');
+  else if(key==='improve') f=data.filter(d=>d.type==='improve');
+  else if(['TR','CC','LR','GR'].includes(key)) f=data.filter(d=>d.cat===key);
+  render(f);
+}
+
+render(data);
+</script>
