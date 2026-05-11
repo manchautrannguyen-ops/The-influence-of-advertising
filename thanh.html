@@ -1,0 +1,96 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.band-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center}
+.band-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.band-val{font-size:20px;font-weight:500}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.filter-btn{font-size:13px;padding:4px 12px;border-radius:99px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer}
+.filter-btn.active{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent}
+.items{display:flex;flex-direction:column;gap:10px}
+.item{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;background:var(--color-background-primary)}
+.item-header{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;font-weight:500}
+.badge-error{background:var(--color-background-danger);color:var(--color-text-danger)}
+.badge-improve{background:var(--color-background-warning);color:var(--color-text-warning)}
+.badge-tr{background:#E6F1FB;color:#0C447C}
+.badge-cc{background:#EAF3DE;color:#27500A}
+.badge-lr{background:#FAEEDA;color:#633806}
+.badge-gr{background:#FBEAF0;color:#72243E}
+.quote{font-size:13px;font-style:italic;color:var(--color-text-secondary);background:var(--color-background-secondary);border-left:3px solid var(--color-border-secondary);padding:6px 10px;border-radius:0 4px 4px 0;margin-bottom:10px;line-height:1.5}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.detail-block{font-size:13px}
+.detail-label{font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.detail-text{color:var(--color-text-primary);line-height:1.5}
+.correction{color:var(--color-text-success)}
+</style>
+<div class="wrap">
+<div class="summary-grid">
+  <div class="band-card"><div class="band-label">Task Response</div><div class="band-val" style="color:#185FA5">~6</div></div>
+  <div class="band-card"><div class="band-label">Coherence & Cohesion</div><div class="band-val" style="color:#3B6D11">~6</div></div>
+  <div class="band-card"><div class="band-label">Lexical Resource</div><div class="band-val" style="color:#854F0B">~5.5</div></div>
+  <div class="band-card"><div class="band-label">Grammatical Range</div><div class="band-val" style="color:#993556">~5.5</div></div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filter('all',this)">All</button>
+  <button class="filter-btn" onclick="filter('error',this)">Errors only</button>
+  <button class="filter-btn" onclick="filter('improve',this)">Improvements only</button>
+  <button class="filter-btn" onclick="filter('TR',this)">TR</button>
+  <button class="filter-btn" onclick="filter('CC',this)">CC</button>
+  <button class="filter-btn" onclick="filter('LR',this)">LR</button>
+  <button class="filter-btn" onclick="filter('GR',this)">GR</button>
+</div>
+
+<div class="items" id="items"></div>
+</div>
+
+<script>
+const data=[
+  {type:"error",cat:"LR",quote:"These things have a big impact on customers",explanation:"'These things' is a vague pronoun reference — it is unclear whether it refers to advertisements, companies, or both. 'Big' is informal and imprecise in academic writing. 'Customers' is also used interchangeably with 'consumers' throughout the essay without consistency.",hint:"Use a specific noun referent and replace 'big' with a formal intensifier.",correction:"These advertisements have a considerable impact on consumers"},
+  {type:"error",cat:"LR",quote:"so the strict regulations on advertising need to be put in place to set a boundary and shape customers' behaviour",explanation:"'Put in place' is a phrasal verb that is acceptable but informal for an academic thesis statement. 'Set a boundary' is vague — boundaries are set between two things; what is the boundary here? 'Shape customers' behaviour' contradicts the protective intent of the essay — shaping behaviour is what advertisers do, not regulators.",hint:"Replace phrasal verbs with more formal alternatives, and clarify what regulations are meant to achieve.",correction:"strict advertising regulations should be introduced to curb manipulative practices and protect consumers from undue influence"},
+  {type:"error",cat:"LR",quote:"they would hire some experts, KOLs, or celebrities",explanation:"'KOL' (Key Opinion Leader) is a regional marketing term primarily used in Asian markets. It is not universally recognised in international academic or IELTS contexts and may confuse the reader. 'Some experts' is also vague — experts in what?",hint:"Replace 'KOLs' with a universally understood term.",correction:"brands often hire influencers, public figures, or celebrities"},
+  {type:"error",cat:"GR",quote:"a key thing leads to becoming more professional and luxurious",explanation:"'A key thing leads to becoming' is ungrammatical. 'Leads to' requires a noun or gerund as its object, but 'becoming more professional' as a result of owning glasses or a watch is also logically odd — objects do not make people professional. The relative clause structure is also missing ('a key thing that leads to').",hint:"Add the relative pronoun 'that' and reconsider the logic — these products signal status, they do not cause professionalism.",correction:"a symbol of professional status or personal success"},
+  {type:"error",cat:"GR",quote:"These advertisements have to be banned from all platforms and penalize the companies strictly as well.",explanation:"Parallel structure error: 'have to be banned' is passive, but 'penalize the companies' is active. The two clauses in a coordinated structure must be grammatically parallel. Also, 'penalize... strictly' is an awkward collocation — 'penalize' already implies severity; 'impose strict penalties on' is the standard expression.",hint:"Make both verbs passive to match 'have to be banned', or restructure so both are active.",correction:"Such advertisements must be banned across all platforms, and companies that breach these rules should face strict penalties."},
+  {type:"error",cat:"GR",quote:"without any benefits as they wish",explanation:"'Without any benefits as they wish' is grammatically unclear and semantically ambiguous. It appears to mean 'without receiving any of the promised benefits', but 'as they wish' adds confusion — it sounds as though the lack of benefits is intentional on someone's part.",hint:"Rephrase to clearly express that consumers are deceived into purchasing products that do not deliver the advertised benefits.",correction:"without receiving the benefits they were led to expect"},
+  {type:"error",cat:"CC",quote:"The government and organizations are taking a few steps to reduce the negative influence of advertising on customers. The first step of the government is to tighten advertising restrictions and give a warning to consumers.",explanation:"'Give a warning to consumers' is an odd combination with 'tighten advertising restrictions' — these are two different kinds of measures (regulatory enforcement vs. consumer notification), yet they are presented as a single step. The paragraph's topic sentence also uses the present continuous ('are taking'), suggesting actions already underway, while the body describes hypothetical proposals.",hint:"Separate the two ideas if both are intended, and use modal verbs ('should', 'can') consistently for proposed measures.",correction:"Governments should tighten advertising regulations by banning misleading claims and requiring companies to substantiate the benefits they promote."},
+  {type:"improve",cat:"TR",quote:"It is believed that people are being surrounded by advertisements from competing companies nowadays.",explanation:"'It is believed that' is a weak, distancing opener that avoids committing to any position. The present continuous 'are being surrounded' implies this is a temporary, in-progress action rather than a general ongoing condition. The introduction also does not address the 'to what extent' question — it states a premise rather than a position.",hint:"Open with a contextualising statement, then state your position on the extent of influence clearly.",correction:"In today's media-saturated environment, consumers are exposed to an unprecedented volume of advertising. I believe this exposure exerts a significant, and often underestimated, influence on purchasing behaviour, making targeted regulatory and educational measures essential."},
+  {type:"improve",cat:"TR",quote:"which is obviously necessary on a daily basis",explanation:"'Obviously necessary on a daily basis' is attached to 'shape people's perceptions about this product', which makes the sentence claim that shaping perceptions is obviously necessary daily — an unusual and unintended argument. The clause is logically detached from what came before it.",hint:"Remove this clause or restructure the sentence so the modifier attaches to the correct idea.",correction:"…companies seek to ensure that consumers encounter their products repeatedly, gradually normalising the brand and shaping perceptions over time."},
+  {type:"improve",cat:"LR",quote:"a fear of missing out behaviour",explanation:"'Fear of missing out' (FOMO) is a well-established concept but is presented here as a casual phrase ('a fear of missing out behaviour') rather than a named psychological phenomenon. The noun phrase is also awkward — 'behaviour' does not collocate naturally with 'fear of missing out'.",hint:"Either define the concept formally on first use, or replace it with academic vocabulary.",correction:"a psychological tendency known as the fear of missing out (FOMO), which compels consumers to make purchases driven by social anxiety rather than genuine need"},
+  {type:"improve",cat:"TR",quote:"Some public or free classes should be established to equip consumers with knowledge and raise awareness.",explanation:"'Public or free classes' is vague and informal as a policy measure. What kind of classes? Who delivers them? The measure lacks specificity. Band 7 requires ideas to be 'well extended and supported', which means proposals should be concrete enough to be credible.",hint:"Specify the type of educational intervention and who should deliver it.",correction:"Media literacy programmes — delivered through schools, community centres, and online platforms — should be introduced to teach consumers how to critically evaluate advertising claims."},
+  {type:"improve",cat:"GR",quote:"By using it for a long time, the famous people can give customers helpful advice and a detailed comparison to the previous model if needed, which can build trust and credibility.",explanation:"'Using it for a long time' is an unusual participial phrase — it is unclear what 'it' refers to (the product? the platform?). The relative clause 'which can build trust' is loosely attached and could refer to the comparison, the advice, or the whole sentence. The sentence is also long and tries to carry too many ideas.",hint:"Break this into two sentences and clarify the pronoun references.",correction:"After extended use of the product, these figures can share genuine impressions and compare it to earlier models. Such authentic reviews are far more persuasive than conventional advertisements, as they build trust through firsthand experience."}
+];
+
+function catClass(c){return{TR:'badge-tr',CC:'badge-cc',LR:'badge-lr',GR:'badge-gr'}[c]||''}
+
+function render(items){
+  document.getElementById('items').innerHTML=items.map(d=>`
+    <div class="item">
+      <div class="item-header">
+        <span class="badge ${d.type==='error'?'badge-error':'badge-improve'}">${d.type==='error'?'Error':'Improvement'}</span>
+        <span class="badge ${catClass(d.cat)}">${d.cat}</span>
+      </div>
+      <div class="quote">"${d.quote}"</div>
+      <div class="grid2">
+        <div class="detail-block"><div class="detail-label">Explanation</div><div class="detail-text">${d.explanation}</div></div>
+        <div class="detail-block"><div class="detail-label">Hint</div><div class="detail-text">${d.hint}</div></div>
+      </div>
+      <div class="detail-block" style="margin-top:10px"><div class="detail-label">Correction / suggestion</div><div class="detail-text correction">${d.correction}</div></div>
+    </div>
+  `).join('');
+}
+
+function filter(key,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  let f=data;
+  if(key==='error') f=data.filter(d=>d.type==='error');
+  else if(key==='improve') f=data.filter(d=>d.type==='improve');
+  else if(['TR','CC','LR','GR'].includes(key)) f=data.filter(d=>d.cat===key);
+  render(f);
+}
+
+render(data);
+</script>
