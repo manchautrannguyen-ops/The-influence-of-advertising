@@ -1,0 +1,96 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.band-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center}
+.band-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.band-val{font-size:20px;font-weight:500}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.filter-btn{font-size:13px;padding:4px 12px;border-radius:99px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer}
+.filter-btn.active{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent}
+.items{display:flex;flex-direction:column;gap:10px}
+.item{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;background:var(--color-background-primary)}
+.item-header{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;font-weight:500}
+.badge-error{background:var(--color-background-danger);color:var(--color-text-danger)}
+.badge-improve{background:var(--color-background-warning);color:var(--color-text-warning)}
+.badge-tr{background:#E6F1FB;color:#0C447C}
+.badge-cc{background:#EAF3DE;color:#27500A}
+.badge-lr{background:#FAEEDA;color:#633806}
+.badge-gr{background:#FBEAF0;color:#72243E}
+.quote{font-size:13px;font-style:italic;color:var(--color-text-secondary);background:var(--color-background-secondary);border-left:3px solid var(--color-border-secondary);padding:6px 10px;border-radius:0 4px 4px 0;margin-bottom:10px;line-height:1.5}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.detail-block{font-size:13px}
+.detail-label{font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.detail-text{color:var(--color-text-primary);line-height:1.5}
+.correction{color:var(--color-text-success)}
+</style>
+<div class="wrap">
+<div class="summary-grid">
+  <div class="band-card"><div class="band-label">Task Response</div><div class="band-val" style="color:#185FA5">~5</div></div>
+  <div class="band-card"><div class="band-label">Coherence & Cohesion</div><div class="band-val" style="color:#3B6D11">~5</div></div>
+  <div class="band-card"><div class="band-label">Lexical Resource</div><div class="band-val" style="color:#854F0B">~5</div></div>
+  <div class="band-card"><div class="band-label">Grammatical Range</div><div class="band-val" style="color:#993556">~5</div></div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filter('all',this)">All</button>
+  <button class="filter-btn" onclick="filter('error',this)">Errors only</button>
+  <button class="filter-btn" onclick="filter('improve',this)">Improvements only</button>
+  <button class="filter-btn" onclick="filter('TR',this)">TR</button>
+  <button class="filter-btn" onclick="filter('CC',this)">CC</button>
+  <button class="filter-btn" onclick="filter('LR',this)">LR</button>
+  <button class="filter-btn" onclick="filter('GR',this)">GR</button>
+</div>
+
+<div class="items" id="items"></div>
+</div>
+
+<script>
+const data=[
+  {type:"error",cat:"GR",quote:"It has a significant impact on consumers and leads to increasing numbers of advertisements because it can stimulate consumption and consumer demand.",explanation:"'It' at the start of this sentence has no clear antecedent — the previous sentence mentions both 'advertisements' (plural) and 'companies' (plural). A singular pronoun cannot logically refer to either. Additionally, the causal logic is circular and unclear: advertisements lead to increasing advertisements because they stimulate demand? This conflates cause and effect.",hint:"Replace 'it' with a specific noun, and untangle the cause-effect logic.",correction:"This advertising landscape has a significant impact on consumers, as it stimulates demand and encourages purchases that may not reflect genuine need."},
+  {type:"error",cat:"GR",quote:"Therefore, there are regulations to control the quality and the content of advertisements.",explanation:"'There are regulations' describes existing conditions as a fact, but in context the writer intends to signal what the essay will argue (i.e., regulations should exist or need to be strengthened). This is both logically imprecise and grammatically weak as a thesis statement.",hint:"Use a modal verb to clearly signal a recommendation rather than a description of the status quo.",correction:"This essay will argue that governments should strengthen regulatory frameworks to protect consumers from misleading advertising practices."},
+  {type:"error",cat:"GR",quote:"advertisements have a significant influence on consumers because it can slowly affect their thinking and behavior",explanation:"Subject-verb agreement error in the conclusion: 'advertisements' is plural, so the pronoun must be 'they', not 'it'.",hint:"Change 'it' to 'they' to agree with the plural subject 'advertisements'.",correction:"advertisements have a significant influence on consumers because they can gradually shape thinking and behaviour"},
+  {type:"error",cat:"GR",quote:"to prevent shopping uncontrollably by not allowing companies to give false information about their products",explanation:"'Prevent shopping uncontrollably' is a malformed verb phrase. 'Prevent' takes a noun or gerund object: 'prevent reckless spending' or 'prevent consumers from shopping impulsively'. The infinitive chain is also awkward: 'control... to prevent... by not allowing' loads too many subordinate clauses onto one sentence.",hint:"Break this into two cleaner sentences, and fix the verb complement after 'prevent'.",correction:"The government should enforce stricter advertising standards, prohibiting companies from making false or misleading claims. This would help prevent consumers from making impulsive purchases based on inaccurate information."},
+  {type:"error",cat:"TR",quote:"Therefore, there are regulations to control the quality and the content of advertisements.",explanation:"The introduction does not answer the 'to what extent' question and does not signal what measures the essay will propose. The thesis is vague and descriptive rather than argumentative. A two-part question requires a thesis that previews both parts of the response.",hint:"State your position on the extent of influence and indicate the types of measures to be discussed.",correction:"I believe advertisements exert a considerable influence on consumer behaviour, and that governments, schools, and individuals all have a role to play in protecting people from their manipulative effects."},
+  {type:"error",cat:"TR",quote:"Most importantly, consumers should control themselves and only buy things that are really necessary for their life.",explanation:"'Consumers should control themselves' is a moralistic statement that places the burden of protection entirely on individual willpower. The question asks what measures can be taken to protect consumers — implying structural or institutional measures. Individual self-control is not a protective measure in the IELTS sense and risks appearing dismissive of the problem.",hint:"Replace this with a structured measure, or reframe it as developing consumer education/critical thinking skills.",correction:"Most importantly, governments and educational institutions should equip consumers with media literacy skills, enabling them to critically assess advertising claims rather than relying solely on self-restraint."},
+  {type:"improve",cat:"TR",quote:"First, advertisements can change people's buying decisions… In addition, young people are easily affected…",explanation:"The two body paragraphs on influence treat 'influence on general consumers' and 'influence on young people' as if they are separate arguments. However, the second paragraph largely repeats the same mechanism (social pressure, fear of missing out) as the first, just with a different demographic. This creates an impression of repetition rather than development.",hint:"Merge the two influence paragraphs around distinct mechanisms: (1) emotional/aspirational influence, (2) subconscious/repeated-exposure influence. Young people can be mentioned as a particularly vulnerable group within one mechanism.",correction:"Restructure body paragraph 1 to address emotional/celebrity influence broadly, and body paragraph 2 to address repeated exposure and social pressure — with young people cited as the most susceptible audience within that second mechanism."},
+  {type:"improve",cat:"CC",quote:"Because of this, they sometimes buy things quickly without thinking carefully. As a result, they may waste money on things they do not really need.",explanation:"Two consecutive result clauses ('Because of this... / As a result...') express essentially the same consequence — impulsive buying leads to wasted money. This is redundant and adds length without adding meaning, which the Band 5 rubric describes as repetition.",hint:"Combine the two into a single, more developed sentence that explains the mechanism more precisely.",correction:"Driven by this fear of missing out, consumers often make hasty purchases that prioritise social conformity over genuine need, leading to unnecessary expenditure."},
+  {type:"improve",cat:"LR",quote:"Many advertisements show products in an attractive way while consumers do not really need them.",explanation:"'In an attractive way' is informal and vague. 'While consumers do not really need them' introduces a concessive clause that is grammatically odd here — 'while' implies simultaneity, but the intended meaning is contrast ('even though' or 'despite').",hint:"Use a more precise adverbial and the correct concessive conjunction.",correction:"Many advertisements present products in a highly appealing manner, even though consumers may have little genuine need for them."},
+  {type:"improve",cat:"LR",quote:"famous brands often use celebrities or discounts to make products look more interesting",explanation:"'Make products look more interesting' is vague and informal. 'Interesting' is not the right word — advertisements aim to make products look desirable, aspirational, or essential, not merely interesting.",hint:"Choose a more precise adjective that reflects the persuasive intent of advertising.",correction:"well-known brands frequently employ celebrity endorsements or promotional discounts to make products appear more desirable or exclusive"},
+  {type:"improve",cat:"CC",quote:"Moreover, parents should talk with their children about not wasting money because of advertisements too.",explanation:"'Talk with their children about not wasting money because of advertisements' is informal and casually phrased for an academic essay. 'Too' at the end is an additive filler that weakens the sentence's academic register. This point also lacks development — no explanation of how parental guidance helps or why it matters.",hint:"Raise the register and briefly explain the mechanism or impact of this measure.",correction:"Parents can also play a vital role by guiding children to think critically about advertising from an early age, helping to establish financial literacy before consumption habits are fully formed."},
+  {type:"improve",cat:"TR",quote:"However, consumers should learn how to become smart buyers.",explanation:"The conclusion is underdeveloped and vague. 'Smart buyers' is an informal phrase, and the conclusion does not synthesise the essay's arguments or measures — it ends with a general aspiration rather than a summary of what has been argued.",hint:"Rewrite the conclusion to briefly summarise the two main arguments (influence + measures) in more formal language.",correction:"In conclusion, advertising exerts a profound influence on consumer behaviour by exploiting emotions and social pressure. Addressing this requires a combination of government regulation, consumer education, and media literacy training — measures that empower individuals to make informed choices rather than reactive ones."}
+];
+
+function catClass(c){return{TR:'badge-tr',CC:'badge-cc',LR:'badge-lr',GR:'badge-gr'}[c]||''}
+
+function render(items){
+  document.getElementById('items').innerHTML=items.map(d=>`
+    <div class="item">
+      <div class="item-header">
+        <span class="badge ${d.type==='error'?'badge-error':'badge-improve'}">${d.type==='error'?'Error':'Improvement'}</span>
+        <span class="badge ${catClass(d.cat)}">${d.cat}</span>
+      </div>
+      <div class="quote">"${d.quote}"</div>
+      <div class="grid2">
+        <div class="detail-block"><div class="detail-label">Explanation</div><div class="detail-text">${d.explanation}</div></div>
+        <div class="detail-block"><div class="detail-label">Hint</div><div class="detail-text">${d.hint}</div></div>
+      </div>
+      <div class="detail-block" style="margin-top:10px"><div class="detail-label">Correction / suggestion</div><div class="detail-text correction">${d.correction}</div></div>
+    </div>
+  `).join('');
+}
+
+function filter(key,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  let f=data;
+  if(key==='error') f=data.filter(d=>d.type==='error');
+  else if(key==='improve') f=data.filter(d=>d.type==='improve');
+  else if(['TR','CC','LR','GR'].includes(key)) f=data.filter(d=>d.cat===key);
+  render(f);
+}
+
+render(data);
+</script>
