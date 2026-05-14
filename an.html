@@ -1,0 +1,98 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.band-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center}
+.band-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.band-val{font-size:20px;font-weight:500}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.filter-btn{font-size:13px;padding:4px 12px;border-radius:99px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer}
+.filter-btn.active{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent}
+.items{display:flex;flex-direction:column;gap:10px}
+.item{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;background:var(--color-background-primary)}
+.item-header{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;font-weight:500}
+.badge-error{background:var(--color-background-danger);color:var(--color-text-danger)}
+.badge-improve{background:var(--color-background-warning);color:var(--color-text-warning)}
+.badge-tr{background:#E6F1FB;color:#0C447C}
+.badge-cc{background:#EAF3DE;color:#27500A}
+.badge-lr{background:#FAEEDA;color:#633806}
+.badge-gr{background:#FBEAF0;color:#72243E}
+.quote{font-size:13px;font-style:italic;color:var(--color-text-secondary);background:var(--color-background-secondary);border-left:3px solid var(--color-border-secondary);padding:6px 10px;border-radius:0 4px 4px 0;margin-bottom:10px;line-height:1.5}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.detail-block{font-size:13px}
+.detail-label{font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.detail-text{color:var(--color-text-primary);line-height:1.5}
+.correction{color:var(--color-text-success)}
+</style>
+<div class="wrap">
+<h2 class="sr-only">IELTS Writing Task 2 feedback on advertising essay: errors and improvements across four band criteria</h2>
+
+<div class="summary-grid">
+  <div class="band-card"><div class="band-label">Task Response</div><div class="band-val" style="color:#185FA5">~6.5</div></div>
+  <div class="band-card"><div class="band-label">Coherence & Cohesion</div><div class="band-val" style="color:#3B6D11">~6.5</div></div>
+  <div class="band-card"><div class="band-label">Lexical Resource</div><div class="band-val" style="color:#854F0B">~7</div></div>
+  <div class="band-card"><div class="band-label">Grammatical Range</div><div class="band-val" style="color:#993556">~6.5</div></div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filter('all',this)">All</button>
+  <button class="filter-btn" onclick="filter('error',this)">Errors only</button>
+  <button class="filter-btn" onclick="filter('improve',this)">Improvements only</button>
+  <button class="filter-btn" onclick="filter('TR',this)">TR</button>
+  <button class="filter-btn" onclick="filter('CC',this)">CC</button>
+  <button class="filter-btn" onclick="filter('LR',this)">LR</button>
+  <button class="filter-btn" onclick="filter('GR',this)">GR</button>
+</div>
+
+<div class="items" id="items"></div>
+</div>
+
+<script>
+const data=[
+  {type:"error",cat:"TR",quote:"Many claim that consumers encounter advertisements on a daily basis.",explanation:"This opening sentence is a vague, imprecise claim. 'Many claim' is a hedge that does not introduce the topic meaningfully. The prompt states exposure to advertisements as a given fact, not a contested claim. The introduction should acknowledge this premise and move directly to the writer's position.",hint:"Rephrase the introduction to accept the premise and lead into your stance.",correction:"In today's media-saturated environment, consumers are exposed to a growing volume of advertisements. While this exposure can influence purchasing behaviour, I believe targeted regulations and public education are the most effective means of consumer protection."},
+  {type:"error",cat:"TR",quote:"On one hand… On the other hand…",explanation:"The question asks two things: (1) to what extent are consumers influenced? and (2) what measures can be taken? The essay uses 'On one hand / On the other hand' as if presenting two contrasting views, but these are not two opposing sides — they are two distinct questions. This framing misrepresents the task structure.",hint:"Reorganise so that one body paragraph answers the 'extent of influence' question, and the other addresses 'protective measures'. Remove the 'on one hand / on the other hand' framing entirely.",correction:"Body paragraph 1: Discuss the extent of influence. Body paragraph 2: Propose protective measures. No contrast signposting needed between them."},
+  {type:"error",cat:"GR",quote:"advertisements are considerably influencing consumers' purchase behaviours",explanation:"The present continuous ('are influencing') is used for a general, ongoing truth. General truths and habitual situations in academic writing use the simple present, not the continuous. This is a tense register error.",hint:"Use the simple present for general statements about ongoing realities.",correction:"advertisements considerably influence consumers' purchasing behaviour"},
+  {type:"error",cat:"GR",quote:"It is obligatory that misleading advertisements should be prohibited.",explanation:"'It is obligatory that... should be' is a double modal construction. 'Obligatory' already carries the obligatory meaning; adding 'should' is redundant and grammatically awkward. The correct structure after 'it is obligatory that' uses the bare infinitive (subjunctive) or simply 'must'.",hint:"Use 'it is obligatory that + bare infinitive' OR simply restructure with 'must'.",correction:"Misleading advertisements must be prohibited. / It is imperative that misleading advertisements be banned."},
+  {type:"error",cat:"GR",quote:"They are required to guarantee consumers the ability to evaluate advertising claims based on consumers' needs and practicality.",explanation:"'They' has an unclear antecedent. The previous sentence refers to 'governments and organisations' raising awareness, but 'they' here could refer to either 'governments', 'organisations', or the public. The sentence is also grammatically awkward — 'guarantee consumers the ability' is an unusual construction.",hint:"Clarify the subject and use a more natural verb construction.",correction:"Governments and organisations should equip consumers with the critical thinking skills needed to evaluate advertising claims against their own needs and financial circumstances."},
+  {type:"improve",cat:"TR",quote:"Many claim that consumers encounter advertisements on a daily basis. Consequently, advertisements are having a significant impact on consumers; therefore, strict regulations should be imposed on advertising.",explanation:"The introduction pre-announces the conclusion ('strict regulations should be imposed') without earning it through argument. This reduces the sense of a developed, argued position and can make the body paragraphs feel redundant. More importantly, the 'to what extent' question requires a nuanced, qualified answer — not just a binary 'yes, they are influenced'.",hint:"Replace the pre-announced conclusion with a signposted position statement that indicates the degree of influence and the type of measures to be discussed.",correction:"While advertising undoubtedly exerts considerable influence over consumer behaviour, the extent of this impact varies by audience and context. This essay will argue that targeted regulation and media literacy programmes are the most effective means of protecting consumers."},
+  {type:"improve",cat:"TR",quote:"despite the impracticality",explanation:"'Despite the impracticality' is inserted as a parenthetical observation but is not explained. The reader is left uncertain: impracticality of what? The product? The purchase? This vagueness weakens the argument.",hint:"Expand this into a full clause that explains the mechanism — consumers buy despite products not meeting their actual needs.",correction:"…purchasing items that may not meet their genuine needs or offer practical value, driven purely by the desire to emulate the celebrity's lifestyle."},
+  {type:"improve",cat:"CC",quote:"Firstly, they should impose stricter regulations on advertising. It is obligatory that misleading advertisements should be prohibited. In other words, brands must provide accurate and relevant information...",explanation:"'In other words' signals a restatement of the same idea — but the two sentences are not equivalents; they are different aspects of the same regulation. This creates a false cohesive link and wastes an opportunity to develop the point further.",hint:"Remove 'In other words' and connect the two ideas causally or as a specification.",correction:"Stricter regulations should require brands to provide accurate, evidence-based information about their products. Advertisements that make unsubstantiated claims should face penalties, deterring deceptive practices."},
+  {type:"improve",cat:"LR",quote:"on-going and endless trends",explanation:"'On-going and endless' is a redundant pairing — both words convey continuity. Using two near-synonyms side by side in this way signals limited lexical precision.",hint:"Choose the more precise or expressive of the two, and use only one.",correction:"perpetual trends / ever-evolving consumer trends"},
+  {type:"improve",cat:"LR",quote:"Indulging in these trends, consumers may experience social pressure in order to keep up with others",explanation:"'Indulging in these trends' is an accurate but somewhat informal participial opener. 'In order to keep up with others' is wordy — 'to keep up with others' achieves the same effect more concisely. The phrase 'experience social pressure in order to keep up' also conflates cause and effect (social pressure causes the keeping up, it is not the purpose of it).",hint:"Restructure to clarify causality: social pressure leads to purchases, not the other way around.",correction:"Caught up in these trends, consumers may feel social pressure to keep pace with their peers, leading them to make purchases driven by conformity rather than genuine need."},
+  {type:"improve",cat:"GR",quote:"more and more informed purchases will be made",explanation:"The passive construction 'will be made' is grammatically correct but vague — it omits the agent (who makes the purchases?). Also, 'more and more informed purchases' is an unusual noun phrase; 'more informed purchasing decisions' is the standard collocation.",hint:"Use an active construction with a clear subject to end the paragraph more precisely.",correction:"consumers will be better positioned to make informed purchasing decisions that reflect their actual needs."},
+  {type:"improve",cat:"TR",quote:"It is the responsibility of governments and organizations to prevent companies from promoting misleading and manipulative advertisements as well as ensure consumers' purchasing rights.",explanation:"The conclusion introduces 'consumers' purchasing rights' — a concept that has not appeared anywhere in the body paragraphs. Introducing new ideas in the conclusion is a common error flagged under TR, as conclusions should synthesise, not extend.",hint:"Remove 'consumers' purchasing rights' or replace it with a reference to a point already made in the body (e.g., informed decision-making, media literacy).",correction:"Governments and organisations have a clear responsibility to regulate misleading advertising and to foster a culture of media literacy, thereby empowering consumers to make choices that genuinely serve their interests."}
+];
+
+function catClass(c){return{TR:'badge-tr',CC:'badge-cc',LR:'badge-lr',GR:'badge-gr'}[c]||''}
+
+function render(items){
+  document.getElementById('items').innerHTML=items.map(d=>`
+    <div class="item">
+      <div class="item-header">
+        <span class="badge ${d.type==='error'?'badge-error':'badge-improve'}">${d.type==='error'?'Error':'Improvement'}</span>
+        <span class="badge ${catClass(d.cat)}">${d.cat}</span>
+      </div>
+      <div class="quote">"${d.quote}"</div>
+      <div class="grid2">
+        <div class="detail-block"><div class="detail-label">Explanation</div><div class="detail-text">${d.explanation}</div></div>
+        <div class="detail-block"><div class="detail-label">Hint</div><div class="detail-text">${d.hint}</div></div>
+      </div>
+      <div class="detail-block" style="margin-top:10px"><div class="detail-label">Correction / suggestion</div><div class="detail-text correction">${d.correction}</div></div>
+    </div>
+  `).join('');
+}
+
+function filter(key,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  let f=data;
+  if(key==='error') f=data.filter(d=>d.type==='error');
+  else if(key==='improve') f=data.filter(d=>d.type==='improve');
+  else if(['TR','CC','LR','GR'].includes(key)) f=data.filter(d=>d.cat===key);
+  render(f);
+}
+
+render(data);
+</script>
