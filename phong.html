@@ -1,0 +1,97 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.band-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;text-align:center}
+.band-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px}
+.band-val{font-size:20px;font-weight:500}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.filter-btn{font-size:13px;padding:4px 12px;border-radius:99px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);cursor:pointer}
+.filter-btn.active{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent}
+.items{display:flex;flex-direction:column;gap:10px}
+.item{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;background:var(--color-background-primary)}
+.item-header{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap}
+.badge{font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap;font-weight:500}
+.badge-error{background:var(--color-background-danger);color:var(--color-text-danger)}
+.badge-improve{background:var(--color-background-warning);color:var(--color-text-warning)}
+.badge-tr{background:#E6F1FB;color:#0C447C}
+.badge-cc{background:#EAF3DE;color:#27500A}
+.badge-lr{background:#FAEEDA;color:#633806}
+.badge-gr{background:#FBEAF0;color:#72243E}
+.quote{font-size:13px;font-style:italic;color:var(--color-text-secondary);background:var(--color-background-secondary);border-left:3px solid var(--color-border-secondary);padding:6px 10px;border-radius:0 4px 4px 0;margin-bottom:10px;line-height:1.5}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.detail-block{font-size:13px}
+.detail-label{font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.detail-text{color:var(--color-text-primary);line-height:1.5}
+.correction{color:var(--color-text-success)}
+</style>
+<div class="wrap">
+<h2 class="sr-only">IELTS Writing Task 2 feedback on advertising essay 3: errors and improvements across four band criteria</h2>
+
+<div class="summary-grid">
+  <div class="band-card"><div class="band-label">Task Response</div><div class="band-val" style="color:#185FA5">~6.5</div></div>
+  <div class="band-card"><div class="band-label">Coherence & Cohesion</div><div class="band-val" style="color:#3B6D11">~6.5</div></div>
+  <div class="band-card"><div class="band-label">Lexical Resource</div><div class="band-val" style="color:#854F0B">~6.5</div></div>
+  <div class="band-card"><div class="band-label">Grammatical Range</div><div class="band-val" style="color:#993556">~6.5</div></div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filter('all',this)">All</button>
+  <button class="filter-btn" onclick="filter('error',this)">Errors only</button>
+  <button class="filter-btn" onclick="filter('improve',this)">Improvements only</button>
+  <button class="filter-btn" onclick="filter('TR',this)">TR</button>
+  <button class="filter-btn" onclick="filter('CC',this)">CC</button>
+  <button class="filter-btn" onclick="filter('LR',this)">LR</button>
+  <button class="filter-btn" onclick="filter('GR',this)">GR</button>
+</div>
+
+<div class="items" id="items"></div>
+</div>
+
+<script>
+const data=[
+  {type:"error",cat:"TR",quote:"On the one hand… On the other hand…",explanation:"This is the same structural misreading seen in several essays in this batch. The question has two distinct parts — how influenced are consumers, and what measures can protect them — not two opposing views. Using 'on the one hand / on the other hand' implies a debate between contrasting perspectives, which misrepresents the task type.",hint:"Use neutral topic signposts rather than contrast markers. One paragraph addresses the influence, the other proposes measures.",correction:"Body paragraph 1 opener: 'Advertising exerts considerable influence over consumers through several mechanisms.' Body paragraph 2 opener: 'Several measures can be adopted to mitigate these effects.'"},
+  {type:"error",cat:"TR",quote:"Therefore, governments should impose strict regulations to protect consumers from this problem.",explanation:"'This problem' is vague as a concluding reference in the introduction. The problem has not been defined yet at this point — the reader does not yet know what the problem is. It also reduces the nuance of the issue to a single unnamed problem, weakening the thesis.",hint:"Name what the problem is, or restructure the introduction so the thesis follows the argument.",correction:"…to shield consumers from the manipulative effects of advertising and help them make more informed choices."},
+  {type:"error",cat:"GR",quote:"consumers are surrounded by advertisements by competing businesses",explanation:"'By advertisements by competing businesses' contains two consecutive 'by' phrases that create an awkward, ambiguous construction. Both 'surrounded by' and 'produced by' use the same preposition, making the sentence difficult to parse.",hint:"Restructure to separate the source of the advertisements from the surrounding.",correction:"consumers are increasingly surrounded by advertisements from competing businesses"},
+  {type:"error",cat:"GR",quote:"they may have the ability to make informed purchasing decisions",explanation:"'May have the ability to' is a double hedge — 'may' and 'have the ability to' both express possibility/capability. Together they are redundant and make the sentence sound uncertain to the point of being uncommitted.",hint:"Use one modal or one ability expression, not both.",correction:"they will be better equipped to make informed purchasing decisions"},
+  {type:"error",cat:"LR",quote:"companies often employ different marketing strategies and persuasive techniques",explanation:"'Different' is a vague and informal modifier in academic writing. It means nothing more than 'various' or 'a range of', but 'different' carries a comparative implication (different from what?). In academic prose, 'various', 'diverse', or 'a range of' is more precise.",hint:"Replace 'different' with a more precise academic quantifier.",correction:"companies often employ a range of marketing strategies and persuasive techniques"},
+  {type:"improve",cat:"TR",quote:"I believe that advertising has a significant impact on people's purchasing behaviour.",explanation:"The 'to what extent' question invites a nuanced, qualified position — not just a binary 'significant impact' claim. At Band 7+, the rubric requires a 'clear and developed position'. A stronger thesis would indicate the degree of influence and acknowledge that it varies (e.g., by audience, medium, or product type).",hint:"Qualify your position: advertising influences most consumers significantly, but the degree depends on factors such as media literacy and audience vulnerability.",correction:"I believe that advertising exerts a considerable influence on consumer behaviour, particularly among less media-literate audiences, though the degree of impact varies depending on the context."},
+  {type:"improve",cat:"TR",quote:"For example, many brands use celebrity endorsements to appeal to consumers' emotions. This creates an emotional connection between buyers and brands, which encourages people to buy products that they do not really need.",explanation:"The example is well chosen but underdeveloped. It describes the mechanism (emotional connection) but does not explain why this is effective at a psychological level, nor does it show the consequence at scale. Band 7 requires ideas to be 'well extended and supported'.",hint:"Add one more layer — why does the emotional connection override rational decision-making?",correction:"Because consumers often trust and aspire to emulate admired celebrities, this emotional association can override rational cost-benefit evaluation, leading them to purchase products they may not need or be able to afford."},
+  {type:"improve",cat:"CC",quote:"Because people are constantly exposed to ads everywhere, this gradually shapes their perceptions.",explanation:"'Everywhere' is informal and vague in academic writing. 'This' as a sentence opener also has a slightly ambiguous antecedent — it could refer to the exposure or to the ads. The sentence is grammatically correct but would be more precise with a specific reference and formal vocabulary.",hint:"Replace 'everywhere' with a more precise expression and clarify what 'this' refers to.",correction:"Because consumers are constantly exposed to advertisements across multiple media platforms, this repeated exposure gradually shapes their perceptions and preferences."},
+  {type:"improve",cat:"LR",quote:"minimise the effect of advertisements",explanation:"'Effect' is singular and generic. The essay has already used 'impacts' (plural) earlier, and 'effects' (plural) would be more precise here, matching the range of effects described in body paragraph 1. There is also an opportunity to use a more specific term.",hint:"Use the plural 'effects' to match the scope of harms described, or choose a more precise noun.",correction:"mitigate the effects / reduce the adverse effects of advertising on consumer behaviour"},
+  {type:"improve",cat:"GR",quote:"Governments can enforce stricter laws by prohibiting misleading or exaggerated advertisements, and impose strict punishments on companies that violate these rules.",explanation:"Parallel structure error: 'enforce stricter laws by prohibiting... and impose' is unparallel because 'enforce' and 'impose' are not in the same grammatical form in context. The 'by prohibiting' gerund phrase is subordinate to 'enforce', but 'impose' is coordinated at the main verb level, creating a structural mismatch.",hint:"Make the two verbs parallel by placing them at the same syntactic level.",correction:"Governments can enforce stricter laws that prohibit misleading or exaggerated advertisements and impose penalties on companies that violate these rules."},
+  {type:"improve",cat:"CC",quote:"When people are taught to evaluate advertising claims and understand marketing strategies, they may have the ability to make informed purchasing decisions and avoid buying unnecessary products.",explanation:"This sentence ends the second body paragraph but is quite predictable — it restates what was already implied by 'educating consumers'. A stronger closing sentence would zoom out and connect the measure back to the essay's central argument (consumer protection).",hint:"End the paragraph by linking consumer education explicitly to the goal of protection stated in the thesis.",correction:"An informed consumer base is far less susceptible to manipulation, and this awareness ultimately represents the most sustainable form of consumer protection."}
+];
+
+function catClass(c){return{TR:'badge-tr',CC:'badge-cc',LR:'badge-lr',GR:'badge-gr'}[c]||''}
+
+function render(items){
+  document.getElementById('items').innerHTML=items.map(d=>`
+    <div class="item">
+      <div class="item-header">
+        <span class="badge ${d.type==='error'?'badge-error':'badge-improve'}">${d.type==='error'?'Error':'Improvement'}</span>
+        <span class="badge ${catClass(d.cat)}">${d.cat}</span>
+      </div>
+      <div class="quote">"${d.quote}"</div>
+      <div class="grid2">
+        <div class="detail-block"><div class="detail-label">Explanation</div><div class="detail-text">${d.explanation}</div></div>
+        <div class="detail-block"><div class="detail-label">Hint</div><div class="detail-text">${d.hint}</div></div>
+      </div>
+      <div class="detail-block" style="margin-top:10px"><div class="detail-label">Correction / suggestion</div><div class="detail-text correction">${d.correction}</div></div>
+    </div>
+  `).join('');
+}
+
+function filter(key,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  let f=data;
+  if(key==='error') f=data.filter(d=>d.type==='error');
+  else if(key==='improve') f=data.filter(d=>d.type==='improve');
+  else if(['TR','CC','LR','GR'].includes(key)) f=data.filter(d=>d.cat===key);
+  render(f);
+}
+
+render(data);
+</script>
